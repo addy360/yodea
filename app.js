@@ -17,7 +17,8 @@ app.use("/ideas",ideasRoutes)
 
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_KEY}@yodea-shard-00-00-mviyw.mongodb.net:27017,yodea-shard-00-01-mviyw.mongodb.net:27017,yodea-shard-00-02-mviyw.mongodb.net:27017/yodea?ssl=true&replicaSet=yodea-shard-0&authSource=admin&retryWrites=true&w=majority`,{
 	useNewUrlParser:true,
-	useUnifiedTopology:true
+	useUnifiedTopology:true,
+	useFindAndModify:false
 })
 .then(()=>{
 	app.listen(PORT,()=>{

@@ -1,0 +1,28 @@
+{{#each ideas}}
+	<div class="card card-body mb-1">
+		<h4>{{ idea.title }}</h4>
+		<p>{{ idea.details }}</p>
+		<div class="row">
+			<div class="col-md-6 offset-md-6">
+				<div class="row">
+					<div class="col-md-6">
+						<form action="/ideas/edit" method="post">
+							<input type="hidden" name="id" value={{idea.id}}>
+							<button type="submit" class="btn btn-light btn-block btn-sm ">Edit</button>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<form action="/ideas/delete" method="post">
+							<input type="hidden" name="id" value={{idea.id}}>
+							<button type="submit" class="btn btn-light btn-dark btn-sm ">Delete</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{{else}}
+	<div class="alert alert-info" role="alert">
+  		You have not registered any Ideas yet!
+	</div>
+{{/each}}
