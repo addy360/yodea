@@ -32,6 +32,7 @@ exports.postIdea = (req, res, next)=>{
 	}
 	new Idea(newIdea).save()
 	.then(results=>{
+		req.flash("success_msg","Idea saved successfully")
 		res.redirect("/ideas")
 	})
 	.catch(err=>{
@@ -55,6 +56,7 @@ exports.updateIdea = (req, res, next) =>{
 	const {id, title, details} = req.body
 	Idea.findOneAndUpdate({_id:id},{title, details})
 	.then(data=>{
+		req.flash("success_msg","Changes saved successfully")
 		res.redirect("/ideas")
 	})
 	.catch(err=>{
@@ -66,7 +68,7 @@ exports.deleteIdea = (req, res, next) =>{
 	const {id} = req.body
 	Idea.findOneAndDelete({_id:id})
 	.then(data=>{
-		console.log(data)
+		req.flash("success_msg","Idea deleted successfully")
 		res.redirect('/ideas')
 	})
 	.catch(err=>{
