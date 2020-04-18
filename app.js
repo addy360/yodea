@@ -11,6 +11,8 @@ const basicRoutes = require('./routes/basicRoutes')
 const authRoutes = require('./routes/authRoutes')
 const globalVars = require('./middlewares/global_vars')
 
+const { isAuth } = require('./middlewares/isAuth')
+
 const PORT = process.env.PORT 
 const app = express()
 app.engine('handlebars', exphbs());
@@ -28,7 +30,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(globalVars)
 app.use("/",basicRoutes)
-app.use("/ideas",ideasRoutes)
+app.use("/ideas", isAuth, ideasRoutes)
 app.use("/auth",authRoutes)
 
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_KEY}@yodea-shard-00-00-mviyw.mongodb.net:27017,yodea-shard-00-01-mviyw.mongodb.net:27017,yodea-shard-00-02-mviyw.mongodb.net:27017/yodea?ssl=true&replicaSet=yodea-shard-0&authSource=admin&retryWrites=true&w=majority`,{

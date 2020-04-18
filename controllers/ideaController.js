@@ -1,6 +1,6 @@
 const Idea = require('../models/Idea')
 exports.getIdeas = (req, res, next)=>{
-	Idea.find().sort({date:"desc"})
+	Idea.find({user:req.user._id}).sort({date:"desc"})
 	.then(results=>{
 		const context = {ideas:[]}
 		if (results) {
@@ -23,12 +23,13 @@ exports.addIdea = (req, res, next) =>{
 
 exports.postIdea = (req, res, next)=>{
 	const { title, details } = req.body
+	const {_id} = req.user
 	const errors = []
 	if (!title) errors.push({message:"Title field is required"})
 	if (!details) errors.push({message:"Details field is required"})
 	if(errors.length > 0) return res.render('ideas/add',{errors, title, details})
 	const newIdea = {
-		title,details
+		title,details, user:_id 
 	}
 	new Idea(newIdea).save()
 	.then(results=>{

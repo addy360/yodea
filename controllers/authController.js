@@ -52,3 +52,8 @@ exports.postRegister = (req, res, next)=>{
 		res.send("Server Error")
 	})
 }
+
+exports.logout = (req, res, next)=>{
+	req.logout()
+	res.redirect('/auth/login')
+}
